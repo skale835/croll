@@ -21,17 +21,21 @@ void respInvalidArgs(std::string theInvArg);                                 //
 //                                                                           //
 // =========== MAIN ======================================================== //
   int main(int argc, char *argv[]) {                                         //
+    if (argc == 1) {
+      respNoArgsGiven();                                       
+      return 1; 
+    }                                                                        //
+                                                                             //
     std::string arg1 = argv[1];                                              //
     //-> Read first argument and act                                         //
       /* Set up to disregard extra arguments */                              //
+    if (!arg1.compare("")) respNoArgsGiven();                                //
                                                                              //
-    if (!argc) respNoArgsGiven();                                            //
-                                                                             //
-    else if (!arg1.compare("-h") || !arg1.compare("--help")) {       //
+    else if (!arg1.compare("-h") || !arg1.compare("--help")) {               //
       respHelpMessage();                                                     //
     }                                                                        //
                                                                              //
-    else if (!arg1.compare("-v") || !arg1.compare("--version")) {    //
+    else if (!arg1.compare("-v") || !arg1.compare("--version")) {            //
       respGiveVersion();                                                     //
     }                                                                        //
                                                                              //
