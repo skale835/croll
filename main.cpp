@@ -30,6 +30,7 @@ void respNoArgsGiven(std::string theBranch);                                 //
 void respHelpMessage();                                                      //
 void respGiveVersion();                                                      //
 void respInvalidArgs(std::string theInvArg);                                 //
+void explorePath(char* arg);                                                 //
                                                                              //
                                                                              //
 // =========== MAIN ======================================================== //
@@ -62,6 +63,12 @@ void respInvalidArgs(std::string theInvArg);                                 //
                                                                              //
       std::string arg2 = argv[2];                                            //
       if (!arg2.compare("")) respNoArgsGiven(arg1);                          //
+                                                                             //
+      else explorePath(*argv[2];)                                            //
+                                                                             //
+                                                                             //
+      }                                                                      //
+                                                                             //
     } /* end -e branch */                                                    //
                                                                              //
     else respInvalidArgs(arg1);                                              //
@@ -89,6 +96,12 @@ void respGiveVersion() {                                                     //
 void respInvalidArgs(std::string theInvArg) {                                //
   std::cout << "croll: invalid argument " << theInvArg << "\n";              //
   respHelpMessage();                                                         //
+}                                                                            //
+                                                                             //
+// ----------- explorePath() ----------------------------------------------- //
+void explorePath(char* arg) {                                                //
+  std::string argString = arg                                                //
+  std::cout << argString;                                                    //
 }                                                                            //
                                                                              //
                                                                              //
