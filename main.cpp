@@ -8,8 +8,14 @@
 // =========== HEADERS ===================================================== //
   #include <iostream>                                                        //
   #include <string>                                                          //
+  #include <filesystem>                                                      //
+    namespace fs = std::filesystem;                                          //
   #include "textfiles.h"                                                     //
-//                                                                           //
+    /* This header is created during the build process, to contain the       //
+       content of the ./textfiles/ folder as converted by `xxd -i`           //
+       into character array, to be converted in this file to const string.*/ //
+                                                                             //
+                                                                             //
 // =========== CONSTANTS =================================================== //
   const std::string HELP_TEXT(                                               //
     reinterpret_cast<const char *>(textfiles_help_txt),                      //
@@ -19,16 +25,13 @@
     reinterpret_cast<const char *>(textfiles_version_txt),                   //
     textfiles_version_txt_len);                                              //
                                                                              //
-                                                                             //
-                                                                             //
-                                                                             //
 // =========== DECLARATIONS ================================================ //
 void respNoArgsGiven();                                                      //
 void respHelpMessage();                                                      //
 void respGiveVersion();                                                      //
 void respInvalidArgs(std::string theInvArg);                                 //
-//                                                                           //
-//                                                                           //
+                                                                             //
+                                                                             //
 // =========== MAIN ======================================================== //
   int main(int argc, char *argv[]) {                                         //
     if (argc == 1) {                                                         //
@@ -39,7 +42,7 @@ void respInvalidArgs(std::string theInvArg);                                 //
     std::string arg1 = argv[1];                                              //
     //-> Read first argument and act                                         //
       /* Set up to disregard extra arguments */                              //
-    if (!arg1.compare("")) respNoArgsGiven();                                //
+    if (!arg1.compare("")) respNoArgsGiven("");                              //
                                                                              //
     else if (!arg1.compare("-h") || !arg1.compare("--help")) {               //
       respHelpMessage();                                                     //
@@ -49,6 +52,12 @@ void respInvalidArgs(std::string theInvArg);                                 //
       respGiveVersion();                                                     //
     }                                                                        //
                                                                              //
+    else if (!arg1.compare("-e") || !arg1.compare("--explore")) {            //
+      if (argc == 2) return 1;                                               //
+      std::string arg2 = argv[2];                                            //
+      if (!arg1.compare("")) respNoArgsGiven("-e");                          //
+    }                                                                        //
+                                                                             //
     else respInvalidArgs(arg1);                                              //
                                                                              //
     return 0;                                                                //
@@ -56,8 +65,8 @@ void respInvalidArgs(std::string theInvArg);                                 //
                                                                              //
 // =========== FUNCTIONS =================================================== //
 // ----------- respNoArgsGiven() ------------------------------------------- //
-void respNoArgsGiven() {                                                     //
-  std::cout << "croll: no arguments given\n";                                //
+void respNoArgsGiven(char* branch) {                                         //
+  std::cout << "croll "branch << " : no arguments given\n";                  //
 }                                                                            //
                                                                              //
 // ----------- respHelpMessage() ------------------------------------------- //

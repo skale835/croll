@@ -5,3 +5,4 @@ usage croll [OPTION] {branch...}
 Arguments:
   -v    --version	Displays version and exits
   -h    --help		Displays this help and exits.
+  -e    --explore	Exploration of a directory
