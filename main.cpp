@@ -26,7 +26,7 @@
     textfiles_version_txt_len);                                              //
                                                                              //
 // =========== DECLARATIONS ================================================ //
-void respNoArgsGiven();                                                      //
+void respNoArgsGiven(std::string theBranch);                                 //
 void respHelpMessage();                                                      //
 void respGiveVersion();                                                      //
 void respInvalidArgs(std::string theInvArg);                                 //
@@ -34,15 +34,16 @@ void respInvalidArgs(std::string theInvArg);                                 //
                                                                              //
 // =========== MAIN ======================================================== //
   int main(int argc, char *argv[]) {                                         //
+    std::string arg0 = argv[0];                                              //
     if (argc == 1) {                                                         //
-      respNoArgsGiven();                                                     //
+      respNoArgsGiven(arg0);                                                 //
       return 1;                                                              //
     }                                                                        //
                                                                              //
     std::string arg1 = argv[1];                                              //
     //-> Read first argument and act                                         //
       /* Set up to disregard extra arguments */                              //
-    if (!arg1.compare("")) respNoArgsGiven("");                              //
+    if (!arg1.compare("")) respNoArgsGiven(arg0);                            //
                                                                              //
     else if (!arg1.compare("-h") || !arg1.compare("--help")) {               //
       respHelpMessage();                                                     //
@@ -53,10 +54,15 @@ void respInvalidArgs(std::string theInvArg);                                 //
     }                                                                        //
                                                                              //
     else if (!arg1.compare("-e") || !arg1.compare("--explore")) {            //
-      if (argc == 2) return 1;                                               //
+                                                                             //
+      if (argc == 2) {                                                       // 
+         respNoArgsGiven(arg1);                                              //
+         return 1;                                                           //
+      }                                                                      //
+                                                                             //
       std::string arg2 = argv[2];                                            //
-      if (!arg1.compare("")) respNoArgsGiven("-e");                          //
-    }                                                                        //
+      if (!arg2.compare("")) respNoArgsGiven(arg1);                          //
+    } /* end -e branch */                                                    //
                                                                              //
     else respInvalidArgs(arg1);                                              //
                                                                              //
@@ -65,8 +71,8 @@ void respInvalidArgs(std::string theInvArg);                                 //
                                                                              //
 // =========== FUNCTIONS =================================================== //
 // ----------- respNoArgsGiven() ------------------------------------------- //
-void respNoArgsGiven(char* branch) {                                         //
-  std::cout << "croll "branch << " : no arguments given\n";                  //
+void respNoArgsGiven(std::string theBranch) {                                //
+  std::cout << "croll " << theBranch << " : no arguments given\n";           //
 }                                                                            //
                                                                              //
 // ----------- respHelpMessage() ------------------------------------------- //
