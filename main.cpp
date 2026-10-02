@@ -8,8 +8,11 @@
 // =========== HEADERS ===================================================== //
   #include <iostream>                                                        //
   #include <string>                                                          //
+                                                                             //
   #include <filesystem>                                                      //
     namespace fs = std::filesystem;                                          //
+    /* For perusing through directories */                                   //
+                                                                             //
   #include "textfiles.h"                                                     //
     /* This header is created during the build process, to contain the       //
        content of the ./textfiles/ folder as converted by `xxd -i`           //
@@ -64,10 +67,7 @@ void explorePath(char* arg);                                                 //
       std::string arg2 = argv[2];                                            //
       if (!arg2.compare("")) respNoArgsGiven(arg1);                          //
                                                                              //
-      else explorePath(*argv[2];)                                            //
-                                                                             //
-                                                                             //
-      }                                                                      //
+      else explorePath(argv[2]);                                             //
                                                                              //
     } /* end -e branch */                                                    //
                                                                              //
@@ -78,31 +78,37 @@ void explorePath(char* arg);                                                 //
                                                                              //
 // =========== FUNCTIONS =================================================== //
 // ----------- respNoArgsGiven() ------------------------------------------- //
-void respNoArgsGiven(std::string theBranch) {                                //
-  std::cout << "croll " << theBranch << " : no arguments given\n";           //
-}                                                                            //
+  void respNoArgsGiven(std::string theBranch) {                              //
+    std::cout << "croll " << theBranch << " : no arguments given\n";         //
+  }                                                                          //
                                                                              //
 // ----------- respHelpMessage() ------------------------------------------- //
-void respHelpMessage() {                                                     //
-  std::cout << HELP_TEXT;                                                    //
-}                                                                            //
+  void respHelpMessage() {                                                   //
+    std::cout << HELP_TEXT;                                                  //
+  }                                                                          //
                                                                              //
 // ----------- respGiveVersion() ------------------------------------------- //
-void respGiveVersion() {                                                     //
-  std::cout << VERSION_TEXT;                                                 //
-}                                                                            //
+  void respGiveVersion() {                                                   //
+    std::cout << VERSION_TEXT;                                               //
+  }                                                                          //
                                                                              //
 // ----------- respInvalidArgs() ------------------------------------------- //
-void respInvalidArgs(std::string theInvArg) {                                //
-  std::cout << "croll: invalid argument " << theInvArg << "\n";              //
-  respHelpMessage();                                                         //
-}                                                                            //
+  void respInvalidArgs(std::string theInvArg) {                              //
+    std::cout << "croll: invalid argument " << theInvArg << "\n";            //
+    respHelpMessage();                                                       //
+  }                                                                          //
                                                                              //
 // ----------- explorePath() ----------------------------------------------- //
-void explorePath(char* arg) {                                                //
-  std::string argString = arg                                                //
-  std::cout << argString;                                                    //
-}                                                                            //
+  void explorePath(char* arg) {                                              //
+    /* Argument should be path to directory. Assumes so, and lets            //
+       <filesystem> say otherwise. */                                        //
+    std::string path = arg;                                                  //
+    std::cout << path << "\n";                                               //
+    for (const auto & entry : fs::directory_iterator(path)) {                //
+      std::cout << entry.path() << "\n";                                     //
+    }                                                                        //
+                                                                             //
+  }                                                                          //
                                                                              //
                                                                              //
 //+++++++++++ EOF ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ //
