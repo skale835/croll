@@ -1,0 +1,4 @@
+[submodule "Vargs"]
+	path = Vargs
+	url = https://github.com/skale835/Vargs.git
+	branch = main
